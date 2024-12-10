@@ -14,7 +14,7 @@ public abstract class Item {
     protected int quantity;
     protected Timestamp timestamp;
     @Setter
-    protected Boolean sellStatus;
+    protected SellStatus sellStatus;
 
     protected Item(String name, int price, int quantity) {
         if (isNegative(price, quantity)) {
@@ -25,7 +25,7 @@ public abstract class Item {
         this.price = price;
         this.quantity = quantity;
         this.timestamp = new Timestamp();
-        this.sellStatus = false;
+        this.sellStatus = SellStatus.STOPPED;
     }
 
     private boolean isNegative(int... numbers) {
@@ -73,7 +73,7 @@ public abstract class Item {
         this.quantity -= quantity;
 
         if (this.quantity == 0) {
-            setSellStatus(false);
+            setSellStatus(SellStatus.SOLD_OUT);
         }
 
         return this.quantity;

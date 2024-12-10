@@ -119,10 +119,10 @@ class ItemTest {
         Item book = new Book("펜", 1000, 5);
 
         // WHEN
-        book.setSellStatus(true);
+        book.setSellStatus(SellStatus.SELLING);
         book.removeQuantity(5);
 
         // THEN
-        Assertions.assertThat(book.sellStatus).isEqualTo(false);
+        Assertions.assertThat(book.sellStatus).isEqualTo(SellStatus.SOLD_OUT);
     }
 }
