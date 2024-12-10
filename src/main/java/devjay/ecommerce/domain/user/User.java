@@ -9,14 +9,17 @@ import lombok.Setter;
 public class User {
     @Setter
     private Long id;
+    @Setter
+    private Role role;
     private final String username;
     private final String password;
     private final String name;
     private final Timestamp timestamp;
     private Long point = 0L;
 
-    public User(String username, String password, String name) {
+    public User(String username, String password, Role role, String name) {
         this.username = username;
+        this.role = role;
         this.password = password;
         this.name = name;
         this.timestamp = new Timestamp();

@@ -10,7 +10,7 @@ class UserTest {
     @DisplayName("포인트 추가")
     void addPoint() {
         // GIVEN
-        User user = createUser();
+        User user = createUser(Role.USER);
 
         // WHEN
         Long result = user.addPoint(10L);
@@ -23,7 +23,7 @@ class UserTest {
     @DisplayName("포인트 조회")
     void getPoint() {
         // GIVEN
-        User user = createUser();
+        User user = createUser(Role.USER);
 
         // WHEN
         user.addPoint(10L);
@@ -37,7 +37,7 @@ class UserTest {
     @DisplayName("포인트 차감")
     void removePoint() {
         // GIVEN
-        User user = createUser();
+        User user = createUser(Role.USER);
 
         // WHEN
         user.addPoint(100L);
@@ -47,7 +47,7 @@ class UserTest {
         Assertions.assertThat(removePoint).isEqualTo(90L);
     }
 
-    private static User createUser() {
-        return new User("test", "test", "test");
+    private static User createUser(Role role) {
+        return new User("test", "test", role, "test");
     }
 }
