@@ -9,7 +9,7 @@ public class Book extends Item {
     private String publisher;
     private String isbn;
     private String author;
-
+    
     public Book(String name, int price, int quantity) {
         super(name, price, quantity);
     }

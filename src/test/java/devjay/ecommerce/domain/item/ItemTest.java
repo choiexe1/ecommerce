@@ -38,7 +38,7 @@ class ItemTest {
     }
 
     @Test
-    @DisplayName("아이템 수량 추가")
+    @DisplayName("아이템 수량을 추가하면 더해진 수량을 반환해야 한다.")
     void addQuantity() {
         // GIVEN
         Book book = new Book("bookA", 1000, 0);
@@ -52,7 +52,7 @@ class ItemTest {
     }
 
     @Test
-    @DisplayName("아이템 수량 차감")
+    @DisplayName("아이템 수량을 차감하면 남은 수량을 반환해야 한다.")
     void removeQuantity() {
         // GIVEN
         Item book = new Book("bookA", 1000, 2);
@@ -73,5 +73,56 @@ class ItemTest {
         assertThrows(IllegalStateException.class, () -> {
             item.removeQuantity(15);
         }, "수량이 음수로 차감되었는데 예외가 발생하지 않았습니다.");
+    }
+
+    @Test
+    @DisplayName("이름을 업데이트하면 새로운 이름이 반환되어야 한다.")
+    void updateName() {
+        // GIVEN
+        Item book = new Book("bookA", 1000, 10);
+
+        // WHEN
+        String updatedName = book.updateName("Book");
+
+        // THEN
+        Assertions.assertThat(updatedName).isEqualTo("Book");
+    }
+
+    @Test
+    @DisplayName("가격을 0보다 작은 값으로 업데이트하면 예외가 발생해야 한다.")
+    void updatePriceWithNegativeValue() {
+        Item book = new Book("bookA", 1000, 10);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            book.updatePrice(-100);
+        }, "가격이 음수일 때 예외가 발생하지 않았습니다.");
+    }
+
+    @Test
+    @DisplayName("가격을 0보다 큰 값으로 업데이트하면 가격이 업데이트되어야 한다.")
+    void updatePriceWithPositiveValue() {
+        // GIVEN
+        Item book
+                = new Book("bookA", 1000, 10);
+
+        // WHEN
+        int updatedPrice = book.updatePrice(1500);
+
+        // THEN
+        Assertions.assertThat(updatedPrice).isEqualTo(1500);
+    }
+
+    @Test
+    @DisplayName("수량이 0이 되면 sellStatus가 자동으로 false로 변경되어야 한다.")
+    void quantityBecomesZeroAutomaticallyChangesSellStatus() {
+        // GIVEN
+        Item book = new Book("펜", 1000, 5);
+
+        // WHEN
+        book.setSellStatus(true);
+        book.removeQuantity(5);
+
+        // THEN
+        Assertions.assertThat(book.sellStatus).isEqualTo(false);
     }
 }

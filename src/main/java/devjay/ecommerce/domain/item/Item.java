@@ -9,29 +9,48 @@ public abstract class Item {
     @Setter
     protected Long id;
 
-    protected final String name;
-    protected final int price;
+    protected String name;
+    protected int price;
     protected int quantity;
     protected Timestamp timestamp;
+    @Setter
+    protected Boolean sellStatus;
 
     protected Item(String name, int price, int quantity) {
-        if (!isPositive(price, quantity)) {
-            throw new IllegalArgumentException("Price and quantity must be greater than 0.");
+        if (isNegative(price, quantity)) {
+            throw new IllegalArgumentException("가격과 수량은 0보다 커야 합니다.");
         }
 
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.timestamp = new Timestamp();
+        this.sellStatus = false;
     }
 
-    private boolean isPositive(int... numbers) {
+    private boolean isNegative(int... numbers) {
         for (int number : numbers) {
             if (number < 0) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    protected String updateName(String name) {
+        this.name = name;
+
+        return this.name;
+    }
+
+    protected int updatePrice(int price) {
+        if (isNegative(price)) {
+            throw new IllegalArgumentException("가격은 0보다 커야 합니다.");
+        }
+
+        this.price = price;
+
+        return this.price;
     }
 
     protected int getTotalPrice() {
@@ -52,6 +71,10 @@ public abstract class Item {
         }
 
         this.quantity -= quantity;
+
+        if (this.quantity == 0) {
+            setSellStatus(false);
+        }
 
         return this.quantity;
     }
