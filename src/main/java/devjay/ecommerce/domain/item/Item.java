@@ -1,5 +1,6 @@
 package devjay.ecommerce.domain.item;
 
+import devjay.ecommerce.domain.common.Timestamp;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ public abstract class Item {
     protected final String name;
     protected final int price;
     protected int quantity;
+    protected Timestamp timestamp;
 
     protected Item(String name, int price, int quantity) {
         if (!isPositive(price, quantity)) {
@@ -20,6 +22,7 @@ public abstract class Item {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.timestamp = new Timestamp();
     }
 
     private boolean isPositive(int... numbers) {
