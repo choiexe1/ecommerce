@@ -37,8 +37,8 @@ public class User {
     public Long removePoint(Long point) {
         long subtracted = this.point - point;
 
-        if (subtracted <= 0) {
-            throw new IllegalArgumentException("입력 값이 기존 값에 비해 많습니다.");
+        if (subtracted < 0) {
+            throw new IllegalStateException("포인트는 음수가 될 수 없습니다.");
         }
 
         this.point -= point;
